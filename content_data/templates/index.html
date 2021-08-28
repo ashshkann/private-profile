@@ -1,0 +1,154 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="{% static 'assets/css/styles.css' %}">
+
+        <!-- =====BOX ICONS===== -->
+        <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+        {% for model in models %}
+            <title> {{ model.title }}</title>
+            <link rel="shortcut icon" href="{{ model.logo.url }}" />
+        {% endfor %}
+    </head>
+    <body>
+        <!--===== HEADER =====-->
+        <header class="l-header">
+            <nav class="nav bd-grid">
+                <div>
+                    {% for model in models %}
+                        <a href="#" class="nav__logo">{{ model.logo_name }}</a>
+                    {% endfor %}
+                </div>
+
+                <div class="nav__menu" id="nav-menu">
+                    <ul class="nav__list">
+                        <li class="nav__item"><a href="#home" class="nav__link active">Home</a></li>
+                        <li class="nav__item"><a href="#about" class="nav__link">About</a></li>
+                        <li class="nav__item"><a href="#work" class="nav__link">Work</a></li>
+                        <li class="nav__item"><a href="#contact" class="nav__link">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav__toggle" id="nav-toggle">
+                    <i class='bx bx-menu'></i>
+                </div>
+            </nav>
+        </header>
+
+        <main class="l-main">
+            <!--===== HOME =====-->
+            <section class="home bd-grid" id="home">
+                <div class="home__data">
+                    {% for model in models %}
+                        <h1 class="home__title">Hi,<br>I'am <span class="home__title-color">{{ model.name }}</span><br>{{ model.job_name }}</h1>
+
+                        <a href="{{ model.url_content }}" class="button">{{ model.text_button }}</a>
+                    {% endfor %}
+                </div>
+
+                <div class="home__social">
+                    {% comment %} <a href="" class="home__social-icon"><i class='bx bxl-linkedin'></i></a>
+                    <a href="" class="home__social-icon"><i class='bx bxl-behance' ></i></a>
+                    <a href="" class="home__social-icon"><i class='bx bxl-telegram' ></i></a> {% endcomment %}
+                </div>
+
+                <div class="home__img"> 
+                    {% for model in models %}
+                        <img src="{{ model.image_content.url }}" alt="">
+                    {% endfor %}
+                </div>
+            </section>
+
+            <!--===== ABOUT =====-->
+            <section class="about section " id="about">
+                <h2 class="section-title">About</h2>
+                {% for model in about_models %}
+                    <div class="about__container bd-grid">
+                        <div class="about__img">
+                            <img src="{{ model.image_content.url }}" alt="">
+                        </div>
+                        
+                        <div>
+                            <h2 class="about__subtitle">{{ model.text_title }}</h2>
+                            <p class="about__text">{{ model.content_text }}</p>           
+                        </div>                                   
+                    </div>
+                {% endfor %}
+            </section>
+
+            <!--===== WORK =====-->
+            <section class="work section" id="work">
+                <h2 class="section-title">Work</h2>
+
+                <div class="work__container bd-grid">
+                    {% for model in work_model %}
+                        <div class="work__img">
+                            <img src="{{ model.image_1.url}}" alt="">
+                        </div>
+                        <div class="work__img">
+                            <img src="{{ model.image_2.url}}" alt="">
+                        </div>
+                        <div class="work__img">
+                            <img src="{{ model.image_3.url}}" alt="">
+                        </div>
+                        <div class="work__img">
+                            <img src="{{ model.image_4.url}}" alt="">
+                        </div>
+                        <div class="work__img">
+                            <img src="{{ model.image_5.url}}" alt="">
+                        </div>
+                        <div class="work__img">
+                            <img src="{{ model.image_6.url}}" alt="">
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <!--===== CONTACT =====-->
+            <section class="contact section" id="contact">
+                <h2 class="section-title">Contact</h2>
+
+                <div class="contact__container bd-grid">
+                    <form method="post" class="contact__form">
+                        {% csrf_token %}
+                        {% for error in contact_form.full_name.errors %}
+                            <p style="color: red;" class="text-danger">{{ error }}</p>
+                        {% endfor %}
+                        {{ contact_form.full_name }}
+                        {% for error in contact_form.email.errors %}
+                            <p style="color: red;" class="text-danger">{{ error }}</p>
+                        {% endfor %}
+                        {{ contact_form.email }}
+                        {{ contact_form.text }}
+                        <input type="submit" value="submit" class="contact__button button">
+                    </form>
+                </div>
+            </section>
+        </main>
+
+        <!--===== FOOTER =====-->
+        <footer class="footer">
+            {% for model in footer_model %}
+                <p class="footer__title">{{ model.text_footer }}</p>
+                <div class="footer__social">
+                    <a href="{{ model.url_field_tel }}" class="footer__icon"><span class="iconify" data-icon="fa-brands:google-drive"></span></i></a>
+                    <a href="{{ model.url_field_insta }}" class="footer__icon"><i class='bx bxl-instagram' ></i></a>
+                    <a href="{{ model.url_field_google }}" class="footer__icon"><i class='bx bxl-telegram' ></i></a>
+                </div>
+                <p>&#169; {{ model.text_copyright }}</p>
+            {% endfor %}
+        </footer>
+
+
+        <!--===== SCROLL REVEAL =====-->
+        <script src="https://unpkg.com/scrollreveal"></script>
+        <script src="https://code.iconify.design/2/2.0.3/iconify.min.js"></script>
+
+        <!--===== MAIN JS =====-->
+        <script src="{% static 'assets/js/main.js' %}"></script>
+    </body>
+</html>
